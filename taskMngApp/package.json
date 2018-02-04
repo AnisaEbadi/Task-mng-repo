@@ -1,0 +1,22 @@
+{
+  "name": "taskmngapp",
+  "version": "1.0.0",
+  "description": "Task management app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "dependencies": {
+    "bcryptjs": "*",
+    "body-parser": "*",
+    "cors": "*",
+    "express": "*",
+    "jsonwebtoken": "*",
+    "mongoose": "*",
+    "passport": "*",
+    "passport-jwt": "*"
+  },
+  "author": "Anisa Ebadi",
+  "license": "ISC"
+}
