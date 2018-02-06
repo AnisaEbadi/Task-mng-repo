@@ -68,16 +68,31 @@ router.get('/profile', passport.authenticate('jwt',{session:false}), (req, res, 
  });
 
  // Task list
- router.get('/tasks', (req, res) => {
-     console.log('Get request for all videos');
-     Task.find({})
-     .exec(function(err, tasks){
-         if(err){
-             console.log("Error retrieving tasks");
-         }else{
-             res.json(tasks);
-         }
-     })
- });
+router.get('/tasks', (req, res) => {
+    console.log('Get request for all tasks');
+    Task.find({})
+    .exec(function(err, tasks){
+        if(err){
+            console.log("Error retrieving tasks");
+        }else{
+            res.json(tasks);
+        }
+    })
+});
+
+// Get Task
+router.get('/tasks/:id', (req, res) => {
+    console.log('Get request for a single task');
+    Task.findById(req.params.id)
+    .exec(function(err, task){
+        if(err){
+            console.log("Error retrieving tasks");
+        }else{
+            res.json(task);
+        }
+    })
+});
+
+ 
 
 module.exports = router;

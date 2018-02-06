@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const config = require('./config/database');
 
 const users = require('./routes/users');
+const tasks = require('./routes/tasks');
 
 
 // Connect to database
@@ -28,8 +29,6 @@ mongoose.connection.on('error', (err) => {
 
 const app = express();
 
-
-
 // Port Number
 const port = 3000;
 
@@ -49,6 +48,8 @@ app.use(passport.session());
 require('./config/passport')(passport);
 
 app.use('/users',users);
+app.use('',tasks);
+
 
 app.get('/', (req, res) => {
     res.send('Invalid Endpoint');
