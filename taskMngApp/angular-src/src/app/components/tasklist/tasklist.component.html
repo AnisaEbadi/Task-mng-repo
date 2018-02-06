@@ -1,3 +1,7 @@
-<p>
-  tasklist works!
-</p>
+<div *ngIf="user">
+  <h2 class="page-header">{{user.name}}</h2>
+  <ul class="">
+    <li>task 1</li>
+    <li>task 2</li>
+  </ul>
+</div>
