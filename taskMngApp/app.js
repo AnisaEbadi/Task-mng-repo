@@ -6,8 +6,15 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const config = require('./config/database');
 
+const users = require('./routes/users');
+
+
 // Connect to database
-mongoose.connect(config.database);
+mongoose.connect(config.database, (err) =>{
+    if(err){
+        console.error("Database connect error! " + err);
+    }
+});
 
 // On Connection
 mongoose.connection.on('connected', () => {
@@ -21,7 +28,7 @@ mongoose.connection.on('error', (err) => {
 
 const app = express();
 
-const users = require('./routes/users');
+
 
 // Port Number
 const port = 3000;

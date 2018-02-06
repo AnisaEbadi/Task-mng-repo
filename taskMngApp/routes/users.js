@@ -4,6 +4,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
+const Task = require('../models/task');
 
 // Register
 router.post('/register', (req, res, next) =>{
@@ -64,6 +65,19 @@ router.post('/authenticate', (req, res, next) =>{
  // Profile
 router.get('/profile', passport.authenticate('jwt',{session:false}), (req, res, next) =>{
     res.json({user: req.user})
+ });
+
+ // Task list
+ router.get('/tasks', (req, res) => {
+     console.log('Get request for all videos');
+     Task.find({})
+     .exec(function(err, tasks){
+         if(err){
+             console.log("Error retrieving tasks");
+         }else{
+             res.json(tasks);
+         }
+     })
  });
 
 module.exports = router;
