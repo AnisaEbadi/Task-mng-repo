@@ -1,3 +1,18 @@
-{{task.name}}
-{{task.description}}
-{{task.imp_tec}}
+<div>
+    <form>
+        <div *ngIf="editName" class="form-group">
+            <input type="input" class="form-control" name="name" required placeholder="name" 
+            [(ngModel)]="task.name">
+        </div>
+        <h3 *ngIf="!editName" (click)="onNameClick()">{{task.name}}</h3>
+        <div class="form-group">
+            <textarea class="form-control" rows="5" name="description" [(ngModel)]="task.description">
+            </textarea>
+        </div>
+        
+        <div class="form-group">
+            <input type="input" class="form-control" name="tec" required placeholder="implementation technology" [(ngModel)]="task.imp_tec">
+        </div>
+        <button type="button" (click)="updateTask()" class="btn btn-primary"> Update </button>
+    </form>
+</div>
