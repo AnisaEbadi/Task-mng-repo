@@ -95,6 +95,8 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_angular2_flash_messages__ = __webpack_require__("../../../../angular2-flash-messages/module/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14_angular2_flash_messages__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__guards_auth_guard__ = __webpack_require__("../../../../../src/app/guards/auth.guard.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_dashboard_dashboard_component__ = __webpack_require__("../../../../../src/app/components/dashboard/dashboard.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_task_detail_task_detail_component__ = __webpack_require__("../../../../../src/app/components/task-detail/task-detail.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -117,11 +119,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
+
 var appRoutes = [
     { path: '', component: __WEBPACK_IMPORTED_MODULE_10__components_home_home_component__["a" /* HomeComponent */] },
     { path: 'register', component: __WEBPACK_IMPORTED_MODULE_7__components_register_register_component__["a" /* RegisterComponent */] },
     { path: 'login', component: __WEBPACK_IMPORTED_MODULE_6__components_login_login_component__["a" /* LoginComponent */] },
-    { path: 'tasklist', component: __WEBPACK_IMPORTED_MODULE_8__components_tasklist_tasklist_component__["a" /* TasklistComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_15__guards_auth_guard__["a" /* AuthGuard */]] },
+    { path: 'dashboard', component: __WEBPACK_IMPORTED_MODULE_16__components_dashboard_dashboard_component__["a" /* DashboardComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_15__guards_auth_guard__["a" /* AuthGuard */]] },
     { path: 'newtask', component: __WEBPACK_IMPORTED_MODULE_9__components_newtask_newtask_component__["a" /* NewtaskComponent */] }
 ];
 var AppModule = (function () {
@@ -136,7 +140,9 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_7__components_register_register_component__["a" /* RegisterComponent */],
                 __WEBPACK_IMPORTED_MODULE_8__components_tasklist_tasklist_component__["a" /* TasklistComponent */],
                 __WEBPACK_IMPORTED_MODULE_9__components_newtask_newtask_component__["a" /* NewtaskComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components_home_home_component__["a" /* HomeComponent */]
+                __WEBPACK_IMPORTED_MODULE_10__components_home_home_component__["a" /* HomeComponent */],
+                __WEBPACK_IMPORTED_MODULE_16__components_dashboard_dashboard_component__["a" /* DashboardComponent */],
+                __WEBPACK_IMPORTED_MODULE_17__components_task_detail_task_detail_component__["a" /* TaskDetailComponent */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -150,6 +156,90 @@ var AppModule = (function () {
         })
     ], AppModule);
     return AppModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/dashboard/dashboard.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/dashboard/dashboard.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div *ngIf=\"user\">\n  <h2 class=\"page-header\">{{user.name}}</h2>\n  <div class=\"row\">\n    <div class=\"col-sm-9\">\n      <task-detail *ngIf=\"selectedTask\" [task]=\"selectedTask\"></task-detail>\n    </div>\n    <div class=\"col-sm-3\">\n      <tasklist (SelectTask)=\"onSelectTask($event)\" [tasks]=\"tasks\"></tasklist>\n    </div>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/dashboard/dashboard.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DashboardComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__("../../../../../src/app/services/auth.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var DashboardComponent = (function () {
+    function DashboardComponent(authService, router) {
+        this.authService = authService;
+        this.router = router;
+        this.tasks = [
+            { "_id": "1", "name": "Task 1", "description": "desc 1", "imp_tec": "tec 1" },
+            { "_id": "2", "name": "Task 2", "description": "desc 2", "imp_tec": "tec 2" },
+            { "_id": "3", "name": "Task 3", "description": "desc 3", "imp_tec": "tec 3" },
+            { "_id": "4", "name": "Task 4", "description": "desc 4", "imp_tec": "tec 4" }
+        ];
+    }
+    DashboardComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.authService.getProfile().subscribe(function (profile) {
+            _this.user = profile.user;
+        }, function (err) {
+            console.log(err);
+            return false;
+        });
+    };
+    DashboardComponent.prototype.onSelectTask = function (task) {
+        this.selectedTask = task;
+        console.log(this.selectedTask);
+    };
+    DashboardComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'app-dashboard',
+            template: __webpack_require__("../../../../../src/app/components/dashboard/dashboard.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/components/dashboard/dashboard.component.css")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* Router */]])
+    ], DashboardComponent);
+    return DashboardComponent;
 }());
 
 
@@ -283,7 +373,7 @@ var LoginComponent = (function () {
             if (data.success) {
                 _this.authService.storeUserData(data.token, data.user);
                 _this.flashMessage.show('You are now logged in', { cssClass: 'alert-success', timeout: 3000 });
-                _this.router.navigate(['/tasklist']);
+                _this.router.navigate(['/dashboard']);
             }
             else {
                 _this.flashMessage.show(data.msg, { cssClass: 'alert-danger', timeout: 5000 });
@@ -329,7 +419,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/navbar/navbar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-expand-md navbar-dark bg-dark \">\n    <a class=\"navbar-brand\" href=\"#\">Task Management App</a>\n    <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarsExampleDefault\" aria-controls=\"navbarsExampleDefault\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n      <span class=\"navbar-toggler-icon\"></span>\n    </button>\n\n    <div class=\"collapse navbar-collapse\" id=\"navbarsExampleDefault\">\n      <ul class=\"navbar-nav mr-auto navbar-left\">\n        <li class=\"nav-item\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact:true}\">\n          <a class=\"nav-link\" [routerLink]=\"['/']\">Home <span class=\"sr-only\">(current)</span></a>\n        </li>\n      </ul>\n\n      <ul class=\"navbar-nav mr-auto navbar-right\">\n          <li *ngIf=\"authService.loggedIn()\" class=\"nav-item\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact:true}\">\n              <a class=\"nav-link\" [routerLink]=\"['/tasklist']\">Task List<span class=\"sr-only\">(current)</span></a>\n            </li>\n\n          <li *ngIf=\"!authService.loggedIn()\" class=\"nav-item\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact:true}\">\n            <a class=\"nav-link\" [routerLink]=\"['/register']\">Register <span class=\"sr-only\">(current)</span></a>\n          </li>\n          <li *ngIf=\"!authService.loggedIn()\" class=\"nav-item\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact:true}\">\n              <a class=\"nav-link\" [routerLink]=\"['/login']\">Login <span class=\"sr-only\">(current)</span></a>\n            </li>\n            <li *ngIf=\"authService.loggedIn()\" class=\"nav-item\">\n              <a class=\"nav-link\" (click)=\"onLogoutClick()\" href=\"#\">Logout <span class=\"sr-only\">(current)</span></a>\n            </li>\n        </ul>\n    </div>\n  </nav>"
+module.exports = "<nav class=\"navbar navbar-expand-md navbar-dark bg-dark \">\n    <a class=\"navbar-brand\" href=\"#\">Task Management App</a>\n    <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarsExampleDefault\" aria-controls=\"navbarsExampleDefault\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n      <span class=\"navbar-toggler-icon\"></span>\n    </button>\n\n    <div class=\"collapse navbar-collapse\" id=\"navbarsExampleDefault\">\n      <ul class=\"navbar-nav mr-auto navbar-left\">\n        <li class=\"nav-item\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact:true}\">\n          <a class=\"nav-link\" [routerLink]=\"['/']\">Home <span class=\"sr-only\">(current)</span></a>\n        </li>\n      </ul>\n\n      <ul class=\"navbar-nav mr-auto navbar-right\">\n          <li *ngIf=\"authService.loggedIn()\" class=\"nav-item\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact:true}\">\n              <a class=\"nav-link\" [routerLink]=\"['/dashboard']\">Dashboard<span class=\"sr-only\">(current)</span></a>\n            </li>\n\n          <li *ngIf=\"!authService.loggedIn()\" class=\"nav-item\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact:true}\">\n            <a class=\"nav-link\" [routerLink]=\"['/register']\">Register <span class=\"sr-only\">(current)</span></a>\n          </li>\n          <li *ngIf=\"!authService.loggedIn()\" class=\"nav-item\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact:true}\">\n              <a class=\"nav-link\" [routerLink]=\"['/login']\">Login <span class=\"sr-only\">(current)</span></a>\n            </li>\n            <li *ngIf=\"authService.loggedIn()\" class=\"nav-item\">\n              <a class=\"nav-link\" (click)=\"onLogoutClick()\" href=\"#\">Logout <span class=\"sr-only\">(current)</span></a>\n            </li>\n        </ul>\n    </div>\n  </nav>"
 
 /***/ }),
 
@@ -559,6 +649,68 @@ var RegisterComponent = (function () {
 
 /***/ }),
 
+/***/ "../../../../../src/app/components/task-detail/task-detail.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/task-detail/task-detail.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "{{task.name}}\n{{task.description}}\n{{task.imp_tec}}\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/task-detail/task-detail.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TaskDetailComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var TaskDetailComponent = (function () {
+    function TaskDetailComponent() {
+    }
+    TaskDetailComponent.prototype.ngOnInit = function () {
+    };
+    TaskDetailComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'task-detail',
+            template: __webpack_require__("../../../../../src/app/components/task-detail/task-detail.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/components/task-detail/task-detail.component.css")],
+            inputs: ['task']
+        }),
+        __metadata("design:paramtypes", [])
+    ], TaskDetailComponent);
+    return TaskDetailComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "../../../../../src/app/components/tasklist/tasklist.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -580,7 +732,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/tasklist/tasklist.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"user\">\n  <h2 class=\"page-header\">{{user.name}}</h2>\n  <div class=\"row\">\n    <div class=\"col-sm-9\">\n      task detail\n    </div>\n    <div class=\"col-sm-3\">\n      task list\n    </div>\n  </div>\n</div>\n\n\n"
+module.exports = "<ul class=\"nav nav-pills nav-stacked\" >\n    <li (click)=\"onSelect(task)\" *ngFor=\"let task of tasks\">\n        <a> {{task.name}} </a>\n    </li>\n</ul>\n\n\n"
 
 /***/ }),
 
@@ -590,8 +742,6 @@ module.exports = "<div *ngIf=\"user\">\n  <h2 class=\"page-header\">{{user.name}
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TasklistComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__("../../../../../src/app/services/auth.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -602,29 +752,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-
-
 var TasklistComponent = (function () {
-    function TasklistComponent(authService, router) {
-        this.authService = authService;
-        this.router = router;
+    function TasklistComponent() {
+        this.SelectTask = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
     }
     TasklistComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.authService.getProfile().subscribe(function (profile) {
-            _this.user = profile.user;
-        }, function (err) {
-            console.log(err);
-            return false;
-        });
+    };
+    TasklistComponent.prototype.onSelect = function (tsk) {
+        this.SelectTask.emit(tsk);
     };
     TasklistComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'app-tasklist',
+            selector: 'tasklist',
             template: __webpack_require__("../../../../../src/app/components/tasklist/tasklist.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/components/tasklist/tasklist.component.css")]
+            styles: [__webpack_require__("../../../../../src/app/components/tasklist/tasklist.component.css")],
+            inputs: ['tasks'],
+            outputs: ['SelectTask']
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* Router */]])
+        __metadata("design:paramtypes", [])
     ], TasklistComponent);
     return TasklistComponent;
 }());

@@ -1,27 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Task } from '../../models/task';
+
 
 
 @Component({
-  selector: 'app-tasklist',
+  selector: 'tasklist',
   templateUrl: './tasklist.component.html',
-  styleUrls: ['./tasklist.component.css']
+  styleUrls: ['./tasklist.component.css'],
+  inputs: ['tasks'],
+  outputs: ['SelectTask']
 })
 export class TasklistComponent implements OnInit {
 
-  user:Object;
+  public SelectTask = new EventEmitter();
 
-  constructor(private authService:AuthService, private router:Router) { }
+  constructor() { }
 
   ngOnInit() {
-    this.authService.getProfile().subscribe(profile => {
-      this.user = profile.user;
-    },
-  err => {
-    console.log(err);
-    return false;
-    });
+  }
+
+  onSelect(tsk: Task){
+    this.SelectTask.emit(tsk);
   }
 
 }

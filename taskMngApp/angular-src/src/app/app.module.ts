@@ -17,12 +17,14 @@ import {ValidateService} from './services/validate.service';
 import {AuthService} from './services/auth.service';
 import {FlashMessagesModule} from 'angular2-flash-messages';
 import {AuthGuard} from './guards/auth.guard';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TaskDetailComponent } from './components/task-detail/task-detail.component';
 
 const appRoutes: Routes = [
   {path:'', component: HomeComponent},
   {path:'register', component: RegisterComponent},
   {path:'login', component:LoginComponent},
-  {path:'tasklist', component: TasklistComponent, canActivate:[AuthGuard]},
+  {path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
   {path:'newtask', component: NewtaskComponent}
 ]
 
@@ -34,7 +36,9 @@ const appRoutes: Routes = [
     RegisterComponent,
     TasklistComponent,
     NewtaskComponent,
-    HomeComponent
+    HomeComponent,
+    DashboardComponent,
+    TaskDetailComponent
   ],
   imports: [
     BrowserModule,
