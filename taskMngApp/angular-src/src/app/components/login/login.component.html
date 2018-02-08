@@ -1,13 +1,15 @@
-<h2 class="page-header">Login</h2>
-<form (submit)="onLoginSubmit()">
-  <div class="form-group">
-    <label>Username</label>
-    <input type="text" class="form-group" [(ngModel)]="username" name="username">
+
+<form class="form-signin" (submit)="onLoginSubmit()">
+  <div class="text-center mb-4 ">
+      <h1 class="h3 mb-3 font-weight-normal">Login</h1>
   </div>
-  <div class="form-group">
-      <label>Password</label>
-      <input type="password" class="form-group" [(ngModel)]="password" name="password">
+
+  <div class="form-label-group">
+    <input type="text" id="inputUsername" placeholder="Username" class="form-control" [(ngModel)]="username" name="username">
   </div>
-  <input type="submit" class="btn btn-primary" value="login">
+  <div class="form-label-group">
+      <input type="password" class="form-control" placeholder="Password" [(ngModel)]="password" name="password">
+  </div>
+  <input type="submit" class="btn btn-lg btn-primary btn-block" value="login">
 </form>
 

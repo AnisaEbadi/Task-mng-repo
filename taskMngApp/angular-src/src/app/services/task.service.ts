@@ -32,4 +32,9 @@ export class TaskService {
 
   }
 
+  deleteTask(task: Task){
+    return this.http.delete(this.putUrl + task._id)
+      .map((res: Response) => res.json());
+  }
+
 }

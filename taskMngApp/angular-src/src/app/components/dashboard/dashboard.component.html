@@ -21,6 +21,7 @@
         </form>
       </div>
       <task-detail (updateTaskEvent)="onUpdateTaskEvent($event)" 
+      (deleteTaskEvent)="onDeleteTaskEvent($event)" 
       *ngIf="selectedTask && hidenewTask" 
       [task]="selectedTask"></task-detail>
     </div>

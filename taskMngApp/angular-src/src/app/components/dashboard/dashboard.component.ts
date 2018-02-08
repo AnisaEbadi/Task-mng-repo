@@ -61,6 +61,19 @@ export class DashboardComponent implements OnInit {
     this.selectedTask = null;
   }
 
+  onDeleteTaskEvent(task: any){
+   let taskArray = this.tasks;
+   this.taskService.deleteTask(task)
+    .subscribe(resDeleteTask => {
+      for(let i=0;i < taskArray.length; i++){
+        if(taskArray[i]._id === task._id){
+          taskArray.splice(i,1);
+        }
+      }
+    });
+    this.selectedTask = null;
+  }
+
   newTask(){
       this.hidenewTask = false;
   }
