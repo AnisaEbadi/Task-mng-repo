@@ -3,4 +3,5 @@ export class Task {
     name: String;
     description: String;
     imp_tec: String;
+    user_id: String
 }

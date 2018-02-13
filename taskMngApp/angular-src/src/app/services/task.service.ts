@@ -12,8 +12,8 @@ export class TaskService {
   private putUrl = this.url + '/task/';
   constructor(private http: Http) { }
 
-  getTasks(){
-    return this.http.get(this.getUrl)
+  getTasks(user_id: any){
+    return this.http.get(this.getUrl + '?user_id=' + user_id)
       .map((res: Response) => res.json());
   }
 

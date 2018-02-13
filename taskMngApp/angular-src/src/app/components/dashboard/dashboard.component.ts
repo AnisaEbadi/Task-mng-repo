@@ -15,6 +15,7 @@ export class DashboardComponent implements OnInit {
 
   user:Object;
   tasks: Array<Task>;
+  user_id: any;
   //  Task[] = [
   //  { "_id" : "1", "name" : "Task 1", "description" : "desc 1", "imp_tec" : "tec 1"}
   //  ,{ "_id" : "2", "name" : "Task 2", "description" : "desc 2", "imp_tec" : "tec 2"}
@@ -30,14 +31,18 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.authService.getProfile().subscribe(profile => {
       this.user = profile.user;
+      
+      this.user_id = profile.user._id;
+      // console.log("user_id : " + this.user_id);
+      this.taskService.getTasks(this.user_id)
+      .subscribe(resTaskData => this.tasks = resTaskData );
     },
   err => {
     console.log(err);
     return false;
     });
 
-    this.taskService.getTasks()
-      .subscribe(resTaskData => this.tasks = resTaskData );
+   
   }
 
   onSelectTask(task:any){
@@ -48,6 +53,8 @@ export class DashboardComponent implements OnInit {
 
   onSubmitAddTask(task: Task){
     this.hidenewTask = true;
+    task.user_id = this.user_id;
+    console.log("add task for user: "+ this.user_id + " " + task.user_id);
       this.taskService.addTask(task)
         .subscribe(resNewTask => {
           this.tasks.push(resNewTask);
@@ -56,6 +63,7 @@ export class DashboardComponent implements OnInit {
       }
 
   onUpdateTaskEvent(task: any){
+    task.user_id = this.user_id;
     this.taskService.updateTask(task)
       .subscribe(resUpdatedTask => task = resUpdatedTask);
     this.selectedTask = null;

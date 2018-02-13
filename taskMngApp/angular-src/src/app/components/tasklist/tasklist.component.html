@@ -1,6 +1,6 @@
-<ul class="nav nav-pills nav-stacked" >
-    <li (click)="onSelect(task)" *ngFor="let task of tasks">
-        <a> {{task.name}} </a>
+<ul class="nav nav-pills nav-stacked" *ngFor="let task of tasks" >
+    <li (click)="onSelect(task)" >
+        <a> {{task.name}}</a>
     </li>
 </ul>
 

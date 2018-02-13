@@ -2,11 +2,27 @@ const express = require('express');
 const router = express.Router();
 //const config = require('../config/database');
 const Task = require('../models/task');
+const User = require('../models/user');
 
-// Task list
+// // Task list
+// router.get('/tasks', (req, res) => {
+//     console.log('Get request for all tasks');
+//     //console.log("req.params.users._id :"+req.params.users._id);
+//     Task.find({})
+//     .exec(function(err, tasks){
+//         if(err){
+//             console.log("Error retrieving tasks");
+//         }else{
+//             res.json(tasks);
+//         }
+//     })
+// });
+
+// Task list accoring to user
 router.get('/tasks', (req, res) => {
-    console.log('Get request for all tasks');
-    Task.find({})
+    console.log('Get request for all tasks of user :'+ req.query.user_id);
+    //console.log("req.params.users._id :"+req.params.users._id);
+    Task.find({ user_id : req.query.user_id})
     .exec(function(err, tasks){
         if(err){
             console.log("Error retrieving tasks");
@@ -36,6 +52,7 @@ router.post('/task',(req, res) => {
     newTask.name = req.body.name;
     newTask.description = req.body.description;
     newTask.imp_tec = req.body.imp_tec;
+    newTask.user_id = req.body.user_id;
     newTask.save((err, insertedTask) => {
         if(err){
             console.log('Error saving task!');
@@ -50,7 +67,7 @@ router.put('/task/:id' ,(req, res) => {
     console.log('Update a task');
     Task.findByIdAndUpdate(req.params.id,
         {
-        $set:{ name: req.body.name, description: req.body.description, imp_tec: req.body.imp_tec}
+        $set:{ name: req.body.name, description: req.body.description, imp_tec: req.body.imp_tec, user_id: req.body.user_id}
         },
         { new: true} ,
         (err , updatedTask) => {
